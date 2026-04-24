@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @theme {
+  --color-dark: #131313;
+  --color-background: #202329;
+  --color-primary: #3f4654;
+  --color-primarySecond: #6b8afd;
+  --color-secondary: #30e0a1;
+  --color-tertiary: #eb7050;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+} */
