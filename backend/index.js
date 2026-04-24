@@ -15,15 +15,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 //middlewares
-const allowedOrigins = [ 
+const allowedOrigins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:8000",
+    "https://swift-chat-app-xiit.vercel.app",
 ];
 
 const corsOptions = {
     origin: (origin, callback) => {
-        if (allowedOrigins.includes(origin) || !origin) {
+        if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
             callback(new Error("Not allowed by CORS"));
