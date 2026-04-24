@@ -17,11 +17,10 @@ const Login = () => {
   const { isAuthenticated, setAuthenticated } = useAuth();
 
   useEffect(() => {
-    console.log(isAuthenticated);
     if (isAuthenticated) {
-      navigate("/");
+      navigate("/chathome");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,6 +35,7 @@ const Login = () => {
       if (response.status == 200) {
         toast.success(response.data.message);
         setAuthenticated(true);
+        navigate("/chathome");
       }
     } catch (error) {
       if (

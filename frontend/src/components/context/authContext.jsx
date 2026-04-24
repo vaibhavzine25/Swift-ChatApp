@@ -1,33 +1,42 @@
-import Cookies from "js-cookie";
+import axios from "axios";
 import React, { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authResolved, setAuthResolved] = useState(false);
+
   const setAuthenticated = (value) => {
     setIsAuthenticated(value);
   };
-   const checkAuth = () => {
-    const token = Cookies.get("authToken");
-    console.log("Checking authentication...");
-    if (token) {
-      console.log("Token exists. Setting authenticated to true.");
+
+  const checkAuth = async () => {
+    try {
+      await axios.get("/api/user/profile", { withCredentials: true });
       setAuthenticated(true);
-      console.log(isAuthenticated);
-    } else {
-      console.log("Token does not exist. Setting authenticated to false.");
+      return true;
+    } catch (error) {
       setAuthenticated(false);
+      return false;
+    } finally {
+      setAuthResolved(true);
     }
   };
 
   const logout = () => {
-    Cookies.remove("authToken");
     setAuthenticated(false);
   };
+
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setAuthenticated, checkAuth, logout }}
+      value={{
+        isAuthenticated,
+        authResolved,
+        setAuthenticated,
+        checkAuth,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

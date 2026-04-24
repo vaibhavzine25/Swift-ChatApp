@@ -21,11 +21,11 @@ import Profile from "./components/Profile";
 import { baseUrl } from "../apiConfig";
 
 const Layout = () => {
-  const { isAuthenticated, checkAuth } = useAuth();
+  const { checkAuth } = useAuth();
 
   useEffect(() => {
     checkAuth();
-  }, [isAuthenticated]);
+  }, []);
 
   return (
     <>

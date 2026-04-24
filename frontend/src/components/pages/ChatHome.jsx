@@ -19,7 +19,7 @@ const ChatHome = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const { userDetails } = useProfile();
-  const { isAuthenticated, checkAuth } = useAuth();
+  const { checkAuth } = useAuth();
   const navigate = useNavigate();
 
   const connectToWebSocket = () => {
@@ -161,10 +161,14 @@ const ChatHome = () => {
     fetchData();
   }, [selectedUserId]);
   useEffect(() => {
-    checkAuth();
-    if (!isAuthenticated) {
-      navigate("/");
-    }
+    const validateAuth = async () => {
+      const isLoggedIn = await checkAuth();
+      if (!isLoggedIn) {
+        navigate("/");
+      }
+    };
+
+    validateAuth();
   }, []);
   return (
     <div className="flex min-h-screen  bg-background ">
